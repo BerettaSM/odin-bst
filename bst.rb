@@ -21,6 +21,20 @@ class Tree
         @root = build_tree(treated_array)
     end
 
+    def insert(value, target=@root)
+        return TreeNode.new(value) if target.nil?
+
+        if value == target.data
+            return target
+        elsif value > target.data
+            target.right = insert(value, target.right)
+        else
+            target.left = insert(value, target.left)
+        end
+
+        return target
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
         puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
