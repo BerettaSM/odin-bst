@@ -11,6 +11,12 @@ class TreeNode
         @left = left
         @right = right
     end
+
+    def to_s
+        string = "TreeNode (data=#{@data}"
+        string += "#{@left ? ", left="+@left.data.to_s : nil}"
+        string += "#{@right ? ", right="+@right.data.to_s : nil})"
+    end
 end
 
 class Tree
