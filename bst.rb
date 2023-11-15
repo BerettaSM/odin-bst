@@ -12,3 +12,11 @@ class TreeNode
         @right = right
     end
 end
+
+class Tree
+    attr_accessor :root
+
+    def initialize(array)
+        @root = nil
+    end
+end
