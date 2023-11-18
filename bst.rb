@@ -134,6 +134,21 @@ class Tree
         return height
     end
 
+    def depth(target=@root)
+        return -1 if target.nil?
+        node = @root
+        depth = 0
+        until node.nil? || node == target
+            if target < node
+                node = node.left
+            else
+                node = node.right
+            end
+            depth += 1
+        end
+        return node.nil? ? -1 : depth
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
         puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -156,3 +171,8 @@ class Tree
         return target
     end
 end
+
+tree = Tree.new([1,2,3,4,5,6,7,8,9,10, 11, 12, 13, 14, 15, 16, 17])
+n = tree.find(1098)
+tree.pretty_print
+p tree.depth(nil)
