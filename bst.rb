@@ -64,4 +64,9 @@ class Tree
         root.right = build_tree(array[mid+1..])
         return root
     end
+
+    def find_leftmost_child(target=@root)
+        target = target.left until target.left.nil?
+        return target
+    end
 end
