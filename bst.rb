@@ -122,7 +122,16 @@ class Tree
     end
 
     def height(target=@root)
-        
+        height = 0
+        until target.left.nil? && target.right.nil?
+            if target.left.nil?
+                target = target.right
+            else
+                target = target.left
+            end
+            height += 1
+        end
+        return height
     end
 
     def pretty_print(node = @root, prefix = '', is_left = true)
