@@ -41,6 +41,37 @@ class Tree
         return target
     end
 
+    def delete(value, target=@root)
+        return nil if target.nil?
+
+        if value < target.data
+            target.left = delete(value, target.left)
+        elsif value > target.data
+            target.right = delete(value, target.right)
+        else
+            # When the node is found, if any of its child slots is empty,
+            # We safely return the opposite child.
+
+            # If the opposite child is also missing, no harm done,
+            # the node's parent (one call behind on the recursion call) will simply delete it
+            # by setting the respective child to nil.
+
+            # If there is, however, an opposite child, either left or right,
+            # the node's parent will simply update the respective child
+            # to point to this node's existing child, effectively removing
+            # the node from the tree.
+            return target.right if target.left.nil?
+            return target.left if target.right.nil?
+
+            # At this point, the node has two childs
+            # We need to find the leftmost child of its right child
+            leftmost_child = find_leftmost_child(target.right)
+            target.data = leftmost_child.data
+            target.right = delete(leftmost_child.data, target.right)
+        end
+        return target
+    end
+
     def find(value, target=@root)
         return nil if target.nil?
         return find(value, target.left) if value < target.data
