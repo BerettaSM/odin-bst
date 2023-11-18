@@ -29,7 +29,6 @@ class Tree
 
     def insert(value, target=@root)
         return TreeNode.new(value) if target.nil?
-
         if value == target.data
             return target
         elsif value > target.data
@@ -37,7 +36,6 @@ class Tree
         else
             target.left = insert(value, target.left)
         end
-
         return target
     end
 
@@ -81,28 +79,51 @@ class Tree
 
     def level_order
         queue = [ @root ]
-
         index = 0
-
         while index < queue.length
             node = queue[index]
-
             queue.push(node.left) if !node.left.nil?
             queue.push(node.right) if !node.right.nil?
-
             if block_given?
                 yield node
             else
                 queue[index] = node.data
             end
-
             index += 1
         end
-
         return queue if !block_given?
     end
 
+    def inorder(target=@root, nodes=[], &block)
+        return if target.nil?
+        inorder(target.left, nodes, &block)
+        block.call(target) if block_given?
+        nodes.append(target.data) if !block_given?
+        inorder(target.right, nodes, &block)
+        return nodes if !block_given?
+    end
 
+    def preorder(target=@root, nodes=[], &block)
+        return if target.nil?
+        block.call(target) if block_given?
+        nodes.append(target.data) if !block_given?
+        preorder(target.left, nodes, &block)
+        preorder(target.right, nodes, &block)
+        return nodes if !block_given?
+    end
+
+    def postorder(target=@root, nodes=[], &block)
+        return if target.nil?
+        postorder(target.left, nodes, &block)
+        postorder(target.right, nodes, &block)
+        block.call(target) if block_given?
+        nodes.append(target.data) if !block_given?
+        return nodes if !block_given?
+    end
+
+    def height(target=@root)
+        
+    end
 
     def pretty_print(node = @root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
