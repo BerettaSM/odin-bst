@@ -161,6 +161,11 @@ class Tree
         (left_height - right_height).abs < 2
     end
 
+    def rebalance
+        array = inorder.sort.uniq
+        @root = build_tree(array)
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
         puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -184,9 +189,13 @@ class Tree
     end
 end
 
-# tree = Tree.new([1,2,3,4,5,6,7,8,9,10, 11, 12, 13, 14, 15, 16, 17])
-tree = Tree.new([9, 15])
+tree = Tree.new([10, 15, 18, 22, 4, 19])
+
 tree.insert(8)
 tree.insert(16)
+tree.insert(17)
+tree.pretty_print
+p tree.balanced?
+tree.rebalance
 tree.pretty_print
 p tree.balanced?
