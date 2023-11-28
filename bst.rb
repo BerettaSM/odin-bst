@@ -188,14 +188,3 @@ class Tree
         return target
     end
 end
-
-tree = Tree.new([10, 15, 18, 22, 4, 19])
-
-tree.insert(8)
-tree.insert(16)
-tree.insert(17)
-tree.pretty_print
-p tree.balanced?
-tree.rebalance
-tree.pretty_print
-p tree.balanced?
